@@ -164,28 +164,27 @@ void main() {
   List<AgriculturalMachinery> allMachineries = [];
 
   // собираем все единицы техники из обоих хранилищ
-  mapBefore2010.values.forEach((territories) { 
-    territories.forEach((territory) { 
+  for (List<Territory> territories in mapBefore2010.values) {
+    for (Territory territory in territories) {
       allMachineries.addAll(territory.machineries);
-     });
-  });
+    }
+  }
 
-  mapAfter2010.values.forEach((territories) { 
-    territories.forEach((territory) { 
+  for (List<Territory> territories in mapAfter2010.values) {
+    for (Territory territory in territories) {
       allMachineries.addAll(territory.machineries);
-     });
-  });
+    }
+  }
 
   // 1. Вычисляем средний возраст всей техники
   int totalAge = 0;
-  allMachineries.forEach((machinery) { 
+  for (AgriculturalMachinery machinery in allMachineries) {
     totalAge += DateTime.now().year - machinery.releaseDate.year;
-  });
+  }
 
   double averageAge = totalAge / allMachineries.length;
   print('Средний возраст всей техники: ${averageAge.truncate()} лет');
   
-
   // 2. Сортируем всю технику по возрасту
   allMachineries.sort(((a, b) => a.releaseDate.compareTo(b.releaseDate)));
 
@@ -195,15 +194,16 @@ void main() {
 
   // Вычисляем средний возраст самой старой техники
   int totalOldestAge = 0;
-  oldestMachineries.forEach((machinery) { 
+  for (AgriculturalMachinery machinery in oldestMachineries) {
     totalOldestAge += DateTime.now().year - machinery.releaseDate.year;
-  });
-
+  }
 
   double averageoldestAge = totalOldestAge / oldestMachineries.length;
   print('Средний возраст самой старой техники: ${averageoldestAge.truncate()} лет');
   print('');
 
-  oldestMachineries.forEach((machinery) => print(machinery));
+  for (AgriculturalMachinery machinery in oldestMachineries) {
+    print(machinery);
+  }
 
 }
