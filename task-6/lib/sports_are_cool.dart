@@ -1,6 +1,6 @@
-// Описание классов на примере вида спорта - Футбол.
+/// Описание классов на примере вида спорта - Футбол.
 
-// абстрактный класс Человек с общими свойствами
+/// абстрактный класс Человек с общими свойствами
 abstract class Human {
   final String name;
   final int age;
@@ -16,10 +16,10 @@ abstract class Human {
     required this.gender,});
 }
 
-// дочерний класс Нападающий
+/// дочерний класс Нападающий
 class Forward extends Human {
-  final int impactForce; // сила удара
-  final int numberOfMatches; // количество матчей
+  final int impactForce; /// сила удара
+  final int numberOfMatches; /// количество матчей
 
   Forward({
     required this.impactForce,
@@ -30,13 +30,13 @@ class Forward extends Human {
     required super.skinColor, 
     required super.gender,});
 
-  // среднее число забитый мячей в матчах
+  /// среднее число забитый мячей в матчах
   int get goalsScrored => numberOfMatches ~/ 2;
 
   @override
   String toString() {
-    print('ЭТО НАПАДАЮЩИЙ');
     return '''
+    'ЭТО НАПАДАЮЩИЙ'
     Name:$name, 
     Age: $age, 
     Height: $height, 
@@ -49,61 +49,44 @@ class Forward extends Human {
 
 }
 
-// реализация класса Вратарь
-class Goalkeeper implements Human, Forward {
-  @override
-  int get age => 20;
+/// реализация класса Вратарь
+class Goalkeeper extends Human {
 
-  @override
-  String get gender => 'male';
-
-  @override
-  int get height => 190;
-
-  @override
-  int get impactForce => 60;
-
-  @override
-  String get name => 'Da silva';
-
-  @override
-  int get numberOfMatches => 34;
-
-  @override
-  String? get skinColor => 'Black';
-  
-
-  @override
-  int get goalsScrored => 0;
+  Goalkeeper({
+    required super.name, 
+    required super.age, 
+    required super.height, 
+    required super.skinColor, 
+    required super.gender}) ;
 
   @override
   String toString() {
-    print('ЭТО ВРАТАРЬ');
     return '''
+    'ЭТО ВРАТАРЬ'
     Name:$name, 
     Age: $age, 
     Height: $height, 
     SkinColor: $skinColor, 
-    Gender: $gender, 
-    ImpactForce: $impactForce, 
-    Matches: $numberOfMatches''';
+    Gender: $gender''';
   }
 }
 
-// класс Тренер
+/// класс Тренер
 class Coach {
   final int awards;
-  Goalkeeper goalkeeper;
-  Forward forward;
+  final List<Human> team;
 
-  Coach({required this.goalkeeper, required this.forward, required this.awards});
+  Coach({
+    required this.awards, 
+    required this.team});
   
   @override
   String toString() {
-    print('ЭТО ТРЕНЕР');
+    String playerName = team.map((players) => players.name).join(', ');
     return '''
+    'ЭТО ТРЕНЕР'
     Awards: $awards,
-    Team: ${[goalkeeper.name, forward.name]} and other players...
+    Team: $playerName and other players...
     ''';
   }
 }
@@ -120,12 +103,21 @@ void main() {
     skinColor: 'Brown', 
     gender: 'male',);
 
-  Goalkeeper goalkeeper = Goalkeeper();
+  Goalkeeper goalkeeper = Goalkeeper(
+    name: 'Da silva', 
+    age: 32, 
+    height: 190, 
+    skinColor: 'White', 
+    gender: 'male');
 
-  print(goalkeeper);
-  print('');
+  List<Human> team = [forward, goalkeeper];
+
+  Coach coach = Coach(awards: 4, team: team);
+
   print(forward);
   print('');
-  Coach coach = Coach(goalkeeper: goalkeeper, forward: forward, awards: 4);
+  print(goalkeeper);
+  print('');
   print(coach);
+
 }
