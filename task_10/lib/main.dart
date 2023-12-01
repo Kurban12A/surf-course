@@ -25,15 +25,23 @@ class MyHomePage extends StatefulWidget {
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
+  
 }
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
-  late AnimationController _controller;
-  late Animation<double> _animation;
+  late final  AnimationController _controller = AnimationController(
+        duration: const Duration(seconds: 1),
+        vsync: this,
+      );
+  late  Animation<double> _animation = _animation = CurvedAnimation(
+        parent: _controller,
+        curve: Curves.elasticOut,
+      );
+  
   Color _currentColor = MyColors.firstColor;
   double _top = 150;
   double _left = 150;
-
+  
   /// проверяем текущий цвет объекта и переключаемся на следующий
   void _changeColor () {
     if (_currentColor == MyColors.firstColor) {
@@ -50,13 +58,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
     _left = max(0, _left + details.delta.dx);
   }
 
-  @override
+/*   @override
   void initState() {
     super.initState();
-    _initializeAnimation();
-  }
+  }  */
 
-  void _initializeAnimation() {
+/*   void _initializeAnimation() {
     setState(() {
       _controller = AnimationController(
         duration: const Duration(seconds: 1),
@@ -67,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
         curve: Curves.elasticOut,
       );
     });
-  }
+  } */
 
   void _onTap() {
     setState(() {
